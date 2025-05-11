@@ -9,9 +9,11 @@ namespace FastRestart.Patches
     [HarmonyPatch(typeof(HUDManager), "SubmitChat_performed")]
     internal class SubmitChatPatch
     {
-        private static bool Prefix(HUDManager _instance, ref InputAction.CallbackContext context)
+        private static bool Prefix(ref InputAction.CallbackContext context)
         {
             if (!context.performed) return true;
+            HUDManager _instance = HUDManager.Instance;
+
             if (string.IsNullOrEmpty(_instance.chatTextField.text)) return true;
 
             PlayerControllerB local = GameNetworkManager.Instance.localPlayerController;
